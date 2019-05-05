@@ -26,21 +26,21 @@ import matplotlib.pyplot as plt
 from sklearn import metrics
 
 df= pd.read_csv("data/processed/full_df_filled_coded.csv")
-from data_preprocessing_1 import test_train_manual
-from data_preprocessing_1 import select_features
+from 1_data_preprocessing import test_train_manual
+from 1_data_preprocessing import select_features
 import random
 
 X_test, X_train, y_test, y_train = test_train_manual(df, 'Leavers', 'id')
 imp_X_train, imp_X_test, feature_importances = select_features(X_test, X_train, y_test, y_train)
 
-#____________________2) Model with reduced features
+#2) Model with reduced features
 # Train the expanded model on only the important features
 rf = RandomForestClassifier(n_estimators= 400, random_state=42)
 rf.fit(imp_X_train, y_train);
 
 print(classification_report(y_test, rf.predict(imp_X_test)))
 
-#___________________3) Model with up/down sampling
+#3) Model with up/down sampling
 #DOWNSAMPLING
 # now let us check in the number of Percentage
 count_stay = len(df[df["Leavers"]==0]) 
@@ -60,7 +60,7 @@ print("length of training df",len(df_train))
 
 leav_ind= np.array(df_train[df_train.Leavers==1].index)
 stay_ind = np.array(df_train[df_train.Leavers==0].index)
-#now let us a define a function for make undersample df with different proportion
+#define a function for make undersample df with different proportion
 #different proportion means with different proportion of normal Leaverses of df
 def undersample(stay_ind,leav_ind,times):#times denote the normal df = times*fraud df
     stay_ind_undersample = np.array(np.random.choice(stay_ind,(times*count_leav),replace=False)) #choose a number of indices from stay
@@ -80,18 +80,18 @@ def undersample(stay_ind,leav_ind,times):#times denote the normal df = times*fra
     return(under_X_train, under_y_train)
 
 #let us train this model using undersample data and test for the whole data test set 
-#for i in range(4,8):
-#    print("the undersample data for {} proportion".format(i))
-#    print()
-#    (under_X_train, under_y_train)=undersample(stay_ind,leav_ind,i)
-#    print("------------------------------------------------------------")
-#    print()
-#    print("the model classification for {} proportion".format(i))
-#    print()
-#    
-#    clf=RandomForestClassifier(n_estimators=100)
-#    clf.fit(under_X_train, under_y_train)
-#    print(classification_report(y_test, clf.predict(imp_X_test)))
+for i in range(4,8):
+    print("the undersample data for {} proportion".format(i))
+    print()
+    (under_X_train, under_y_train)=undersample(stay_ind,leav_ind,i)
+    print("------------------------------------------------------------")
+    print()
+    print("the model classification for {} proportion".format(i))
+    print()
+    
+    clf=RandomForestClassifier(n_estimators=100)
+    clf.fit(under_X_train, under_y_train)
+    print(classification_report(y_test, clf.predict(imp_X_test)))
 
 #the best performnace is with the 6 proportion
 (under_X_train, under_y_train)=undersample(stay_ind,leav_ind,6)
@@ -153,13 +153,6 @@ os.environ["PATH"] += os.pathsep + 'C:/Appl/release/bin'
 graph.write_png('tree_5.png')
 
 
-
-#you can save the model for future use with the code below
-import pickle
-
-rfdump=rf_imp_para
-filename = 'single_RFC_downsamp.joblib'
-pickle.dump(rfdump, open(filename, 'wb'))
 
 #_________________MEASURE PERFORMANCE
 
