@@ -8,10 +8,3 @@ The data:
 * absencence: vacation hours entered
 * travel: travel hours entered
 
-## Initial File Structure
-
-```
-├── notebooks                <- Notebooks for analysis and testing
-│   ├── features             <- Notebooks for generating and analysing features (1 per feature)
-│   ├── modelling            <- Notebooks for modelling
-│   └── preprocessing        <- Notebooks for Preprocessing 
