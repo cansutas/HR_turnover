@@ -15,7 +15,7 @@ default_path='C:/Users/CAT/OneDrive - Equinor/Projects/Project Strech/Project v.
 os.chdir(default_path)
 df= pd.read_csv("data/processed/full_df_filled_coded.csv")
 
-#____________1)SELECT IMPORTANT FEATURES
+#1)SELECT IMPORTANT FEATURES
 main_df=df
 
 def select_features(main_df, num):
@@ -61,27 +61,3 @@ def select_features(main_df, num):
 feature_importances = select_features(df, '2')
 
 df.info()
-
-#print('Training Features Shape:', X_train.shape)
-#print('Training Labels Shape:', y_train.shape)
-#print('Testing Features Shape:', X_test.shape)
-#print('Testing Labels Shape:', y_test.shape)
-
-
-##______Recursive Feature Elimination______________
-#from sklearn.feature_selection import RFE
-#model = RandomForestClassifier(n_estimators= 1000, random_state=42)
-#rfe = RFE(model, 20)
-#rfe = rfe.fit(df[X], df[y])
-#
-#feature_array=np.array(features)
-#filtering=np.array(rfe.support_)
-#print(sorted(zip(rfe.support_, features)))
-#print(sorted(zip(rfe.ranking_,X)))
-#
-#from itertools import compress
-#fil =list(rfe.support_)
-#cols=list(compress(features, fil))
-#
-#X=df[cols]
-#y=df['Leavers']
