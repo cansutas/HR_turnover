@@ -7,7 +7,7 @@ The notebooks are for displaying the code only. I will update with a mock data s
 ## The Data 
 The data belongs to an international company with over 20.000 employees working in more than 20 countries. One of the challenges was the differences in data collection methods in the different countries the company operates in. For example, the comparison of pay would be meaningless, as there are different policies/pay levels in each continent. However a lot of valuable information would be lost if I restricted the analysis to one continent, because this company had very low levels of turnover (around 1% in the last year), and I had to include all the data I had. 
 
-The data included the last 13 months of info per employee. Not all employees had all 13 months, as the query did not bring up rows from months were there were no change to the employee info. Some of the "leavers" (employees who lef the company) also didn't have all the months, as they left before the last month I pulled from the server. 
+The data included the last 13 months of info per employee. Not all employees had all 13 months, as the query did not bring up rows from months where there were no change to the employee info. Some of the "leavers" (employees who lef the company) also didn't have all the months, as they left before the last month I pulled from the server. 
 
 The data:
 * main: the data with basic demographics such as age, gender, seniority level, years spent in the company, nationality etc.
@@ -18,9 +18,9 @@ The data:
 
 The challenge was to merge these datasets without loosing detail of info as much as possible. I couldn't use data such as sickleave, motivation or pay due to GDPR, which would probably increase the performance of the model immediately. That pushed me to get creative with data engineering. I created the following 
 
-* expat: if the nationality of the employee was different than the country they worked in 
-* promotion: if the employee changed to a position that's higher in the corporate ladder
-* country_count: number of countries an employee worked in. more diverse experience considered to improve motivation but also increase the employee's value, could lead to poaching. 
+* expat: 1 if the nationality of the employee was different than the country they worked in 
+* promotion: sum of Band changes for the employee over the last 13 months. (e.g. 2 if employee was promoted 2 Band levels)
+* country_count: number of countries an employee worked in in the last 13 months. more diverse experience considered to improve motivation but also increase the employee's value, could lead to poaching. 
 
 ## The Model
 
